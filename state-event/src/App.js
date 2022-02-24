@@ -33,12 +33,16 @@ const App = () => {
   //   React.createElement(Expenses, { items: expenses })
   // );
 
+  const saveNewExpense = (newExpense) => {
+    console.log(newExpense);
+  };
+
   return (
     <div>
-      <NewExpense/>
+      <NewExpense onNewExpenseCreated={saveNewExpense} />
       <Expenses items={expenses} />
     </div>
   );
-}
+};
 
 export default App;
