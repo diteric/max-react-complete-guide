@@ -7,6 +7,7 @@ import ExpensesFilter from './ExpensesFilter';
 
 const Expenses = (props) => {
   const [selection, setSelection] = useState('2021');
+  console.log(selection);
 
   const logNewSelection = (selection) => {
     console.log(selection);
@@ -19,14 +20,16 @@ const Expenses = (props) => {
         onSelectionChanged={logNewSelection}
         selected={selection}
       ></ExpensesFilter>
-      {props.items.map((item) => (
-        <ExpenseItem
-          key={item.id}
-          title={item.title}
-          amount={item.amount}
-          date={item.date}
-        />
-      ))}
+      {props.items
+        .filter((i) => i.date.getFullYear().toString() === selection)
+        .map((item) => (
+          <ExpenseItem
+            key={item.id}
+            title={item.title}
+            amount={item.amount}
+            date={item.date}
+          />
+        ))}
     </Card>
   );
 };
