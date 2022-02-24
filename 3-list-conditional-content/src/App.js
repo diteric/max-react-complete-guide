@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import NewExpense from './components/NexExpense/NewExpense';
 import Expenses from './components/Expenses/Expenses';
 
 const App = () => {
-  const expenses = [
+  const [expenses, setExpenses] = useState([
     {
       id: 'e1',
       title: 'Toilet Paper',
@@ -24,7 +24,7 @@ const App = () => {
       amount: 450,
       date: new Date(2021, 5, 12),
     },
-  ];
+  ]);
 
   // return React.createElement(
   //   'div',
@@ -34,7 +34,8 @@ const App = () => {
   // );
 
   const saveNewExpense = (newExpense) => {
-    console.log(newExpense);
+    setExpenses((expenses) => [newExpense, ...expenses]);
+    console.log(expenses);
   };
 
   return (
