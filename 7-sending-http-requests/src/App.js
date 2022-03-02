@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
@@ -8,27 +8,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchMoviesHandler = () => {
-    fetch('https://swapi.dev/api/films')
-      .then((reponse) => {
-        return reponse.json();
-      })
-      .then((data) => {
-        const transformedMovies = data.results.map((movie) => {
-          return {
-            id: movie.episode_id,
-            title: movie.title,
-            openingText: movie.opening_crawl,
-            releaseDate: movie.release_date,
-          };
-        });
-        setMovies(transformedMovies);
-      });
-  };
-
   // async and await are used together to unwrap the Promise object,
   // It is another way of using the Fetch API
-  const fetchMoviesHandlerAsync = async () => {
+  const fetchMoviesHandlerAsync = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     const response = await fetch('https://swapi.dev/api/filmsxx');
@@ -48,9 +30,9 @@ function App() {
       setMovies(transformedMovies);
     }
     setIsLoading(false);
-  };
+  }, []);
 
-  // useEffect(fetchMoviesHandler, []);
+  useEffect(() => fetchMoviesHandlerAsync(), [fetchMoviesHandlerAsync]);
 
   let content = <p></p>;
   if (movies.length > 0) {
