@@ -24,12 +24,30 @@ function App() {
       });
   };
 
+  // async and await are used together to unwrap the Promise object,
+  // It is another way of using the Fetch API
+  const fetchMoviesHandlerAsync = async () => {
+    const response = await fetch('https://swapi.dev/api/films');
+    const data = await response.json();
+
+    const transformedMovies = data.results.map((movie) => {
+      return {
+        id: movie.episode_id,
+        title: movie.title,
+        openingText: movie.opening_crawl,
+        releaseDate: movie.release_date,
+      };
+    });
+
+    setMovies(transformedMovies);
+  };
+
   useEffect(fetchMoviesHandler, []);
 
   return (
     <React.Fragment>
       <section>
-        <button>Fetch Movies</button>
+        <button onClick={fetchMoviesHandlerAsync}>Fetch Movies</button>
       </section>
       <section>
         <MoviesList movies={movies} />
